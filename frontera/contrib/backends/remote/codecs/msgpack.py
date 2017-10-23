@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 def _prepare_request_message(request):
     def serialize(obj):
         """Recursively walk object's hierarchy."""
-        if isinstance(obj, (bool, six.integer_types, float, six.binary_type, six.text_type)):
+        if isinstance(obj, (bool, six.integer_types, float, six.binary_type, six.text_type)) or obj is None:
             return obj
         elif isinstance(obj, dict):
             obj = obj.copy()
@@ -109,7 +109,7 @@ class Decoder(BaseDecoder):
             return ('new_job_id', int(obj[1]))
         if obj[0] == b'of':
             return ('offset', int(obj[1]), int(obj[2]))
-        return TypeError('Unknown message type')
+        raise TypeError('Unknown message type')
 
     def decode_request(self, buffer):
         return self._request_from_object(unpackb(buffer, encoding='utf-8'))
