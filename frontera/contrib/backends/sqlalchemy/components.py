@@ -49,6 +49,7 @@ class Metadata(BaseMetadata):
 
     @retry_and_rollback
     def add_seeds(self, seeds):
+        # 添加种子，此处没有去重
         for seed in seeds:
             o = self._create_page(seed)
             self.cache[to_bytes(o.fingerprint)] = self.session.merge(o)
@@ -126,6 +127,7 @@ class States(MemoryStates):
 
     @retry_and_rollback
     def fetch(self, fingerprints):
+        # 将持久化存储的数据读到内存中
         to_fetch = [to_native_str(f) for f in fingerprints if f not in self._cache]
         self.logger.debug("cache size %s", len(self._cache))
         self.logger.debug("to fetch %d from %d", len(to_fetch), len(fingerprints))
