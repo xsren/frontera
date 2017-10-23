@@ -1,5 +1,10 @@
 # Frontera
 
+——20171023 update——
+
+增加中文注释，方便他人研读代码
+
+
 ## Overview
 
 Frontera is a web crawling framework consisting of [crawl frontier](http://nlp.stanford.edu/IR-book/html/htmledition/the-url-frontier-1.html), 
